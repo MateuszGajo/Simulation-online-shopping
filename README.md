@@ -3,7 +3,7 @@
 ## Demo
 https://shop-9eef4.firebaseapp.com
 
-the project simulates real shopping
+Project simulates real shopping
 
 
 ## Library what i used
