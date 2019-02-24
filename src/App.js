@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './Components/Layout/Navbar';
+import Dashboard from './Components/Dashboard/Dashboard';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import SignIn from './Components/Auth/SignIn';
+import SignUp from './Components/Auth/SignUp';
+import ErrorPage from './Components/Layout/ErrorPage';
+import Products from './Components/Shopping/Products';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div className="app">
+          <Navbar />
+          <Switch>
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/products" component={Products} />
+            <Route component={ErrorPage} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
