@@ -30,7 +30,7 @@ export const signIn = (credentials) => {
         ).then(() => {
             dispatch({ type: "SIGNIN_SUCCESS" })
         }).catch(err => {
-            dispatch({ type: "SIGNUP_ERROR", err })
+            dispatch({ type: "SIGNIN_ERROR", err })
         })
     }
 }
