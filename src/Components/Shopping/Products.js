@@ -31,19 +31,8 @@ class Products extends Component {
 
 
     render() {
-        const { user, products, } = this.props;
-        console.log(user)
-        const ammountProducts = []
-        if (products !== undefined) {
-            for (let i = 0; i < products.length; i++) {
-                const amount = user.shopping.filter(item => {
-                    return (item.id == i)
-                })
-                ammountProducts.push(amount.length);
-            }
-        }
-
-
+        const { user, products } = this.props;
+        console.log(user);
 
         return (
             <div className="container section">
@@ -52,13 +41,11 @@ class Products extends Component {
                         <span className="card-title"> <h3 className="center">Resume</h3></span>
                         <div className="row">
                             <div className="col s12 l4">
-                                {ammountProducts.map((ammount, index) => {
-                                    if (ammount > 0) {
-                                        const product = products.find(product => {
-                                            return product.id === index;
-                                        })
+                                {user !== undefined ?
+                                    user.shopping.map(product => {
+
                                         return (
-                                            <div className="card" key={index}>
+                                            <div className="card" key={product.id}>
                                                 <div className="card-image">
                                                     <img src={product.image} alt="picture" height={150} />
                                                 </div>
@@ -68,7 +55,7 @@ class Products extends Component {
                                                 </div>
                                                 <div className="card-action">
                                                     <span>{product.price}$</span>
-                                                    <span className="right" style={{ display: "flex" }}>ammount: {ammount}
+                                                    <span className="right" style={{ display: "flex" }}>ammount: {product.ammount}
                                                         <span >
                                                             <i className="material-icons align-right cursor green-text" onClick={() => this.props.addProduct(product)}>add_circle_outline</i>
                                                             <i className="material-icons cursor red-text" onClick={() => this.props.removeProduct(product.id)}>remove_circle_outline</i>
@@ -77,9 +64,9 @@ class Products extends Component {
                                                 </div>
                                             </div>
                                         )
+
                                     }
-                                }
-                                )}
+                                    ) : null}
                             </div>
                             <div className="col s12 l6 offset-l1">
 

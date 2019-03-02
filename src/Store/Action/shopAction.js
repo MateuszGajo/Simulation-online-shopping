@@ -7,12 +7,33 @@ export const addProduct = (product) => {
             return user.id === auth.uid
         });
         const oldShopping = user.shopping;
-        const newShopping = [...oldShopping, product];
-        let price = 0;
-        const costShopping = user.shopping.map(product => {
-            return price += product.price
+        const newProduct = {
+            ...product,
+            ammount: 1,
+        }
+        let addNew = true;
+        let newShopping;
+        const productExist = oldShopping.map(item => {
+            if (item.id === product.id) {
+                addNew = false;
+                return {
+                    ...item,
+                    ammount: item.ammount + 1
+                }
+            }
+            else {
+                return {
+                    ...item
+                }
+            }
         })
-        price = price + product.price
+        addNew ? newShopping = [...oldShopping, newProduct] : newShopping = [...productExist]
+
+        let price = 0;
+        newShopping.map(product => {
+            return price = price + product.price * product.ammount
+        })
+
 
         firestore
             .collection("users")
@@ -75,23 +96,38 @@ export const removeProduct = (id) => {
             return user.id === auth.uid
         });
         const oldShopping = user.shopping;
-        const products = oldShopping.filter(item => {
-            return item.id === id
+
+        let newShopping = oldShopping.map(item => {
+            if (item.id === id) {
+                if (item.ammount === 1) {
+                    console.log('usun')
+                }
+                return {
+                    ...item,
+                    ammount: item.ammount - 1
+                }
+
+            }
+            else {
+                return {
+                    ...item
+                }
+            }
         })
-        const removeProducts = products.splice(0, products.length - 1);
-        const otherShopping = oldShopping.filter(item => {
-            return item.id !== id
-        });
-        const allShopping = [...otherShopping, ...removeProducts];
+
+        newShopping = newShopping.filter(item => {
+            return item.ammount > 0
+        })
+
         let price = 0;
-        const costShopping = allShopping.map(product => {
-            return price += product.price
+        newShopping.map(product => {
+            return price = price + product.price * product.ammount
         })
         firestore
             .collection("users")
             .doc(auth.uid)
             .update({
-                shopping: allShopping,
+                shopping: newShopping,
                 allCost: price,
             })
     }
