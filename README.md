@@ -1,19 +1,15 @@
-## Simulation online shopping 
+## Store
 
 ## Demo
 https://shop-9eef4.firebaseapp.com
 
-Project simulates real shopping
+online shopping
 
 
-## Library what i used
+## Technologies
+html
+css
+react
+redux
+ 
 
- React Router Dom,
- Redux,
- React Redux Firebase,
- Redux Firestore
- 
- 
- ## Hosting
- 
-I used Firebase to host application
